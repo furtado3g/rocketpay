@@ -4,7 +4,7 @@ defmodule RocketpayWeb.UsersController do
   alias  Rocketpay.User
 
   def create(conn,params)do
-    filename
+    params
     |>Rocketpay.create_user()
     |>handleResponse(conn)
   end
@@ -15,9 +15,9 @@ defmodule RocketpayWeb.UsersController do
     |> render("create.json" , user: user)
   end
 
-  #defp handleResponse({:error, reason},conn) do
-  #  conn
-  #  |> put_status(:bad_request)
-  #  |> json(reason)
-  #end
+  defp handleResponse({:error,_reason},conn) do
+    conn
+    |> put_status(:bad_request)
+    |> json(%{error: "Ocorreu um  erro ao processarsua requisição"})
+  end
 end
